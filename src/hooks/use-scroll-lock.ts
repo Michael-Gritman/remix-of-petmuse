@@ -58,7 +58,12 @@ function unlock() {
   body.style.scrollbarGutter = previous.scrollbarGutter;
   previous = null;
 
+  // `html { scroll-behavior: smooth }` would animate (and can drop) this jump.
+  const html = document.documentElement;
+  const previousBehavior = html.style.scrollBehavior;
+  html.style.scrollBehavior = "auto";
   window.scrollTo(0, savedScrollY);
+  html.style.scrollBehavior = previousBehavior;
 }
 
 /** Locks background scrolling without shifting or resizing the page. */
