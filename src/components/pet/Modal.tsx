@@ -52,7 +52,7 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
       if (phaseRef.current !== "open") setPhase("open");
     } else if (phaseRef.current !== "closed") {
       setPhase("closed");
-      restoreFocus.current?.focus?.();
+      restoreFocus.current?.focus?.({ preventScroll: true });
     }
   }, [open]);
 
@@ -63,7 +63,7 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
       if (phase !== "closing") return;
       finishClose();
       onClose();
-      restoreFocus.current?.focus?.();
+      restoreFocus.current?.focus?.({ preventScroll: true });
     },
     [phase, finishClose, onClose],
   );
@@ -71,7 +71,7 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
   useEffect(() => {
     if (!mounted) return;
     const panel = panelRef.current;
-    panel?.focus();
+    panel?.focus({ preventScroll: true });
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
