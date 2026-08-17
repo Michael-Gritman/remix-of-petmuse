@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type AnimationEvent as ReactAnimationEvent,
+  type ReactNode,
+} from "react";
 import { useScrollLock } from "@/hooks/use-scroll-lock";
 
 interface ModalProps {
@@ -21,6 +28,8 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
 
   const mounted = phase !== "closed";
   const closing = phase === "closing";
+  const phaseRef = useRef(phase);
+  phaseRef.current = phase;
 
   useScrollLock(mounted);
 
@@ -40,19 +49,16 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
   useEffect(() => {
     if (open) {
       restoreFocus.current = document.activeElement as HTMLElement;
-      setPhase((current) => (current === "open" ? current : "open"));
-    } else {
-      setPhase((current) => {
-        if (current === "closed") return current;
-        restoreFocus.current?.focus?.();
-        return "closed";
-      });
+      if (phaseRef.current !== "open") setPhase("open");
+    } else if (phaseRef.current !== "closed") {
+      setPhase("closed");
+      restoreFocus.current?.focus?.();
     }
   }, [open]);
 
   // When the exit animation ends, unmount and tell the owner to flip `open`.
   const handleAnimationEnd = useCallback(
-    (event: React.AnimationEvent<HTMLDivElement>) => {
+    (event: ReactAnimationEvent<HTMLDivElement>) => {
       if (event.target !== panelRef.current) return;
       if (phase !== "closing") return;
       finishClose();
