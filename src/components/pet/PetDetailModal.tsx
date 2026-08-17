@@ -70,16 +70,19 @@ export function PetDetailModal({
       {(close) => (
         <div ref={scrollRef} className="overflow-y-auto overscroll-contain">
           <div className={swapping ? "opacity-0" : "fade-swap-in"}>
-            <div className="relative">
+            <div className="relative bg-cream">
               <img
                 key={pet.id}
                 src={photo(pet.image, 1200)}
                 srcSet={photoSrcSet(pet.image)}
                 sizes="(max-width: 640px) 100vw, 760px"
                 alt={`${pet.name} — ${pet.breed}`}
-                className="h-[38vh] w-full object-cover sm:h-[42vh]"
+                className="mx-auto block max-h-[46dvh] w-full object-contain sm:max-h-[52dvh]"
               />
-              <div className="absolute top-4 right-4">
+              <div
+                className="absolute right-4"
+                style={{ top: "max(1rem, env(safe-area-inset-top))" }}
+              >
                 <CloseButton onClose={close} />
               </div>
             </div>
@@ -143,7 +146,7 @@ export function PetDetailModal({
                           src={photo(similarPet.image, 400)}
                           alt={similarPet.name}
                           loading="lazy"
-                          className="h-24 w-full object-cover"
+                          className="h-24 w-full bg-sand object-contain"
                         />
                         <p className="px-3 py-2 text-[13px] leading-tight font-medium text-foreground">
                           {similarPet.name}
