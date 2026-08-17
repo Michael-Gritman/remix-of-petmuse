@@ -36,19 +36,17 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
     });
   }, []);
 
-  useEffect(() => {
-    if (phase !== "closed") return;
-    if (open) return;
-    // notify the owner once the exit transition has actually finished
-  }, [phase, open]);
-
   // Sync with the controlled `open` prop.
   useEffect(() => {
     if (open) {
       restoreFocus.current = document.activeElement as HTMLElement;
       setPhase((current) => (current === "open" ? current : "open"));
     } else {
-      setPhase((current) => (current === "closed" ? current : "closed"));
+      setPhase((current) => {
+        if (current === "closed") return current;
+        restoreFocus.current?.focus?.();
+        return "closed";
+      });
     }
   }, [open]);
 
@@ -98,10 +96,7 @@ export function Modal({ open, onClose, labelledBy, children, panelClassName = ""
   if (!mounted) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-end justify-center overscroll-contain sm:items-center"
-      style={closing ? { pointerEvents: "none" } : undefined}
-    >
+    <div className="fixed inset-0 z-50 flex items-end justify-center overscroll-contain sm:items-center">
       <div
         className="animate-overlay-in absolute inset-0 bg-foreground/12 backdrop-blur-[11px]"
         style={closing ? { opacity: 0, transition: "opacity 280ms var(--ease-soft)" } : undefined}
