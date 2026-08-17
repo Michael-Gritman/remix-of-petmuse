@@ -1,0 +1,621 @@
+/**
+ * Lifestyle-match data layer — one entry per pet profile ID in `pets.ts`.
+ *
+ * Every value lives here so scoring numbers never leak into UI components.
+ * Levels are 1–5 (low → high) and describe the animal, not the owner:
+ *
+ *   spaceNeed / timeNeed / careNeed / costLevel / experienceNeed
+ *     = how much the animal requires. Compared against what the user can offer.
+ *   noiseLevel
+ *     = how much sound it typically makes. Compared against user tolerance.
+ *   activityLevel / interactionLevel
+ *     = the animal's everyday pace and how much contact it wants.
+ *     Compared as a preference distance, in both directions.
+ *
+ * Where an existing metric in `pets.ts` covered the same ground it was converted
+ * on a 1–4 → 1–5 scale (spaceNeed, attentionNeed → timeNeed, energy →
+ * activityLevel, grooming → careNeed, typicalCost → costLevel,
+ * beginnerFriendly → experienceNeed inverted). `noiseLevel`,
+ * `interactionLevel`, `childCompatibility` and `otherPetCompatibility` have no
+ * source metric and are editorial breed-typical estimates — conservative on
+ * purpose. `reviewNote` marks the entries that deviate most from a plain
+ * conversion and should be checked by a human first.
+ */
+
+export type MatchLevel = 1 | 2 | 3 | 4 | 5;
+
+export type Compatibility = "good" | "conditional" | "poor";
+
+/** Drives which "responsible source" guidance is shown. */
+export type AcquisitionCategory = "dog" | "cat" | "rabbit" | "small-pet" | "bird" | "specialist";
+
+/** Drives which starter-kit list is shown. */
+export type StarterKitCategory = "dog" | "cat" | "rabbit" | "small-pet" | "bird";
+
+export interface PetMatchProfile {
+  spaceNeed: MatchLevel;
+  timeNeed: MatchLevel;
+  activityLevel: MatchLevel;
+  interactionLevel: MatchLevel;
+  careNeed: MatchLevel;
+  noiseLevel: MatchLevel;
+  costLevel: MatchLevel;
+  experienceNeed: MatchLevel;
+  childCompatibility: Compatibility;
+  otherPetCompatibility: Compatibility;
+  acquisitionCategory: AcquisitionCategory;
+  starterKitCategory: StarterKitCategory;
+  /** Shown as plain guidance, never as legal advice. */
+  legalityOrSafetyNote?: string;
+  /** Present when the numbers are an estimate rather than a straight conversion. */
+  reviewNote?: string;
+}
+
+export const petMatchProfiles: Record<string, PetMatchProfile> = {
+  // ---------------------------------------------------------------- Dogs
+  "golden-retriever": {
+    spaceNeed: 4,
+    timeNeed: 4,
+    activityLevel: 4,
+    interactionLevel: 5,
+    careNeed: 3,
+    noiseLevel: 3,
+    costLevel: 4,
+    experienceNeed: 2,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+  },
+  "labrador-retriever": {
+    spaceNeed: 4,
+    timeNeed: 4,
+    activityLevel: 4,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 3,
+    costLevel: 4,
+    experienceNeed: 2,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+  },
+  beagle: {
+    spaceNeed: 3,
+    timeNeed: 4,
+    activityLevel: 4,
+    interactionLevel: 4,
+    careNeed: 2,
+    noiseLevel: 5,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    legalityOrSafetyNote:
+      "Beagles bay loudly. Check tenancy or building noise rules before committing.",
+    reviewNote: "noiseLevel set to the top of the scale on breed reputation, not a measured value.",
+  },
+  "cocker-spaniel": {
+    spaceNeed: 3,
+    timeNeed: 3,
+    activityLevel: 3,
+    interactionLevel: 4,
+    careNeed: 4,
+    noiseLevel: 3,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+  },
+  "australian-shepherd": {
+    spaceNeed: 5,
+    timeNeed: 5,
+    activityLevel: 5,
+    interactionLevel: 5,
+    careNeed: 3,
+    noiseLevel: 3,
+    costLevel: 4,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    reviewNote: "timeNeed and activityLevel pushed to 5 because unmet working drive is the main failure mode.",
+  },
+  corgi: {
+    spaceNeed: 3,
+    timeNeed: 3,
+    activityLevel: 4,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 4,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    reviewNote: "childCompatibility conditional on herding-breed nipping, not on aggression.",
+  },
+  "cavalier-king-charles": {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 5,
+    careNeed: 3,
+    noiseLevel: 2,
+    costLevel: 4,
+    experienceNeed: 2,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    legalityOrSafetyNote:
+      "Breed-linked heart and neurological conditions are common. Ask for parental health screening.",
+    reviewNote: "costLevel raised above the source metric to reflect likely lifetime veterinary spend.",
+  },
+  pug: {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 3,
+    costLevel: 4,
+    experienceNeed: 3,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    legalityOrSafetyNote:
+      "Flat-faced breed: heat and breathing risks. Avoid hot climates and hard exercise.",
+    reviewNote: "careNeed and costLevel raised for facial-fold cleaning and airway-related vet care.",
+  },
+  "french-bulldog": {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 4,
+    careNeed: 2,
+    noiseLevel: 2,
+    costLevel: 5,
+    experienceNeed: 3,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    legalityOrSafetyNote:
+      "Flat-faced breed: heat, breathing and spinal problems are frequent, and surgery is expensive.",
+    reviewNote: "costLevel set to 5 — highest of all dog profiles.",
+  },
+  "jack-russell": {
+    spaceNeed: 3,
+    timeNeed: 4,
+    activityLevel: 5,
+    interactionLevel: 4,
+    careNeed: 1,
+    noiseLevel: 4,
+    costLevel: 3,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    legalityOrSafetyNote:
+      "Strong prey drive — not safe to house with rabbits, small pets or birds.",
+  },
+  "rescue-mixed-breed": {
+    spaceNeed: 3,
+    timeNeed: 3,
+    activityLevel: 3,
+    interactionLevel: 4,
+    careNeed: 2,
+    noiseLevel: 3,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "dog",
+    starterKitCategory: "dog",
+    reviewNote:
+      "Mid-range placeholder: an individual rescue dog can sit anywhere on every scale. Meet the animal.",
+  },
+
+  // ---------------------------------------------------------------- Cats
+  ragdoll: {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 1,
+    costLevel: 3,
+    experienceNeed: 2,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+  },
+  "maine-coon": {
+    spaceNeed: 4,
+    timeNeed: 3,
+    activityLevel: 3,
+    interactionLevel: 3,
+    careNeed: 4,
+    noiseLevel: 2,
+    costLevel: 4,
+    experienceNeed: 3,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+  },
+  "british-shorthair": {
+    spaceNeed: 2,
+    timeNeed: 2,
+    activityLevel: 2,
+    interactionLevel: 2,
+    careNeed: 2,
+    noiseLevel: 1,
+    costLevel: 3,
+    experienceNeed: 1,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+    reviewNote: "childCompatibility conditional because the breed dislikes being carried around.",
+  },
+  "persian-cat": {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 1,
+    interactionLevel: 3,
+    careNeed: 5,
+    noiseLevel: 1,
+    costLevel: 4,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+    legalityOrSafetyNote:
+      "Flat-faced breed: daily eye cleaning and coat work, plus breathing risks in heat.",
+    reviewNote: "careNeed set to 5 — the highest care value in the dataset.",
+  },
+  bengal: {
+    spaceNeed: 4,
+    timeNeed: 4,
+    activityLevel: 5,
+    interactionLevel: 4,
+    careNeed: 2,
+    noiseLevel: 4,
+    costLevel: 5,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+    legalityOrSafetyNote:
+      "Early-generation (F1–F4) Bengals are restricted or banned in some regions. Verify local rules.",
+  },
+  "european-shorthair": {
+    spaceNeed: 2,
+    timeNeed: 2,
+    activityLevel: 3,
+    interactionLevel: 3,
+    careNeed: 2,
+    noiseLevel: 2,
+    costLevel: 2,
+    experienceNeed: 1,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+  },
+  "tuxedo-cat": {
+    spaceNeed: 1,
+    timeNeed: 2,
+    activityLevel: 3,
+    interactionLevel: 3,
+    careNeed: 2,
+    noiseLevel: 3,
+    costLevel: 2,
+    experienceNeed: 1,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+    reviewNote: "Coat-pattern profile rather than a breed; values follow the domestic shorthair baseline.",
+  },
+  "ginger-cat": {
+    spaceNeed: 2,
+    timeNeed: 2,
+    activityLevel: 2,
+    interactionLevel: 3,
+    careNeed: 2,
+    noiseLevel: 2,
+    costLevel: 2,
+    experienceNeed: 1,
+    childCompatibility: "good",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+    reviewNote: "Coat-colour profile rather than a breed; values follow the domestic shorthair baseline.",
+  },
+  "domestic-longhair": {
+    spaceNeed: 2,
+    timeNeed: 2,
+    activityLevel: 2,
+    interactionLevel: 2,
+    careNeed: 3,
+    noiseLevel: 1,
+    costLevel: 3,
+    experienceNeed: 2,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "good",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+  },
+  "kitten-adoption": {
+    spaceNeed: 2,
+    timeNeed: 4,
+    activityLevel: 4,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 2,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "cat",
+    starterKitCategory: "cat",
+    legalityOrSafetyNote:
+      "Kittens need a proofed room and supervision for the first months, plus a vaccination course.",
+    reviewNote: "Life-stage profile: timeNeed reflects the first year, not an adult cat.",
+  },
+
+  // ------------------------------------------------------------- Rabbits
+  "holland-lop": {
+    spaceNeed: 3,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 3,
+    careNeed: 4,
+    noiseLevel: 1,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "rabbit",
+    starterKitCategory: "rabbit",
+    legalityOrSafetyNote:
+      "Rabbits chew cables and skirting. The room needs proofing, and most dislike being picked up.",
+    reviewNote: "careNeed raised above the grooming metric for daily litter, hay and enclosure work.",
+  },
+  "netherland-dwarf": {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 3,
+    careNeed: 4,
+    noiseLevel: 1,
+    costLevel: 3,
+    experienceNeed: 4,
+    childCompatibility: "poor",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "rabbit",
+    starterKitCategory: "rabbit",
+    reviewNote:
+      "childCompatibility poor — small, easily startled and injured by handling. This caps scores for households with children.",
+  },
+  "lionhead-rabbit": {
+    spaceNeed: 3,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 3,
+    careNeed: 5,
+    noiseLevel: 1,
+    costLevel: 3,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "rabbit",
+    starterKitCategory: "rabbit",
+    reviewNote: "careNeed 5 combines the woolly mane with normal rabbit enclosure work.",
+  },
+
+  // ---------------------------------------------------------- Small pets
+  "guinea-pig": {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 2,
+    interactionLevel: 3,
+    careNeed: 4,
+    noiseLevel: 2,
+    costLevel: 2,
+    experienceNeed: 1,
+    childCompatibility: "good",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "small-pet",
+    starterKitCategory: "small-pet",
+    legalityOrSafetyNote:
+      "Guinea pigs must live in pairs or groups, and need daily fresh vegetables for vitamin C.",
+    reviewNote: "timeNeed and careNeed above the source metrics because of daily feeding and cage cleaning.",
+  },
+  "syrian-hamster": {
+    spaceNeed: 1,
+    timeNeed: 1,
+    activityLevel: 2,
+    interactionLevel: 1,
+    careNeed: 2,
+    noiseLevel: 2,
+    costLevel: 1,
+    experienceNeed: 1,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "poor",
+    acquisitionCategory: "small-pet",
+    starterKitCategory: "small-pet",
+    legalityOrSafetyNote:
+      "Strictly solitary — never house two together. Keep well away from cats and dogs.",
+    reviewNote:
+      "otherPetCompatibility poor for a prey species that must also live alone. This caps scores for homes that already have pets.",
+  },
+  "dwarf-hamster": {
+    spaceNeed: 1,
+    timeNeed: 1,
+    activityLevel: 2,
+    interactionLevel: 1,
+    careNeed: 2,
+    noiseLevel: 2,
+    costLevel: 1,
+    experienceNeed: 2,
+    childCompatibility: "poor",
+    otherPetCompatibility: "poor",
+    acquisitionCategory: "small-pet",
+    starterKitCategory: "small-pet",
+    reviewNote:
+      "Both compatibilities poor — too fast and fragile for young hands, and a prey animal. Double-capped profile, review first.",
+  },
+  "fancy-rat": {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 3,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 1,
+    costLevel: 2,
+    experienceNeed: 2,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "small-pet",
+    starterKitCategory: "small-pet",
+    legalityOrSafetyNote:
+      "Needs a same-sex companion. A 2–3 year lifespan is short, and respiratory illness is common.",
+  },
+  chinchilla: {
+    spaceNeed: 3,
+    timeNeed: 2,
+    activityLevel: 3,
+    interactionLevel: 2,
+    careNeed: 3,
+    noiseLevel: 2,
+    costLevel: 3,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "small-pet",
+    starterKitCategory: "small-pet",
+    legalityOrSafetyNote:
+      "Needs a room kept cool — overheating is dangerous. Can live 15 years or more.",
+  },
+  ferret: {
+    spaceNeed: 3,
+    timeNeed: 5,
+    activityLevel: 5,
+    interactionLevel: 5,
+    careNeed: 4,
+    noiseLevel: 1,
+    costLevel: 4,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "specialist",
+    starterKitCategory: "small-pet",
+    legalityOrSafetyNote:
+      "Ferrets are restricted or banned in some cities and states. Check local rules and exotic-vet access first.",
+    reviewNote: "timeNeed 5 for daily supervised free-roam time; careNeed 4 for enclosure and odour management.",
+  },
+  "mini-pig": {
+    spaceNeed: 5,
+    timeNeed: 5,
+    activityLevel: 3,
+    interactionLevel: 4,
+    careNeed: 4,
+    noiseLevel: 3,
+    costLevel: 5,
+    experienceNeed: 5,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "specialist",
+    starterKitCategory: "small-pet",
+    legalityOrSafetyNote:
+      "Often zoned as livestock and banned in rentals or city limits. Adults are far larger than piglet photos suggest.",
+    reviewNote: "Highest-demand profile in the dataset: space, time, cost and experience all at 5.",
+  },
+
+  // --------------------------------------------------------------- Birds
+  budgerigar: {
+    spaceNeed: 2,
+    timeNeed: 3,
+    activityLevel: 3,
+    interactionLevel: 3,
+    careNeed: 3,
+    noiseLevel: 4,
+    costLevel: 2,
+    experienceNeed: 2,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "bird",
+    starterKitCategory: "bird",
+    legalityOrSafetyNote:
+      "Keep birds away from non-stick cookware fumes, aerosols and free-roaming cats.",
+  },
+  cockatiel: {
+    spaceNeed: 3,
+    timeNeed: 4,
+    activityLevel: 3,
+    interactionLevel: 4,
+    careNeed: 3,
+    noiseLevel: 4,
+    costLevel: 3,
+    experienceNeed: 3,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "bird",
+    starterKitCategory: "bird",
+    legalityOrSafetyNote:
+      "Cockatiels produce feather dust — difficult for dust-sensitive or asthmatic households.",
+  },
+  canary: {
+    spaceNeed: 2,
+    timeNeed: 2,
+    activityLevel: 2,
+    interactionLevel: 1,
+    careNeed: 3,
+    noiseLevel: 3,
+    costLevel: 2,
+    experienceNeed: 1,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "bird",
+    starterKitCategory: "bird",
+    reviewNote: "childCompatibility conditional because canaries are a look-don't-hold pet, not because of risk.",
+  },
+  "green-cheek-conure": {
+    spaceNeed: 3,
+    timeNeed: 5,
+    activityLevel: 4,
+    interactionLevel: 5,
+    careNeed: 3,
+    noiseLevel: 5,
+    costLevel: 4,
+    experienceNeed: 4,
+    childCompatibility: "conditional",
+    otherPetCompatibility: "conditional",
+    acquisitionCategory: "bird",
+    starterKitCategory: "bird",
+    legalityOrSafetyNote:
+      "A 20–30 year commitment, and loud calls can breach flat or tenancy noise rules.",
+    reviewNote: "timeNeed and noiseLevel at 5 — parrot-level attention and volume in a small body.",
+  },
+};
+
+/** Profiles whose values are estimates rather than conversions, for human review. */
+export const profilesNeedingReview: string[] = Object.entries(petMatchProfiles)
+  .filter(([, profile]) => Boolean(profile.reviewNote))
+  .map(([id]) => id);

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { petsById, photo, photoSrcSet, type Pet } from "@/data/pets";
 import { Modal, CloseButton } from "./Modal";
+import { PetActionLinks } from "./PetActionLinks";
 import { PetMetrics } from "./PetMetrics";
 import { SaveButton } from "./SaveButton";
 
@@ -156,6 +157,8 @@ export function PetDetailModal({
                   </div>
                 </section>
               )}
+
+              <PetActionLinks pet={pet} className="border-t border-border pt-7" />
             </div>
           </div>
         </div>
