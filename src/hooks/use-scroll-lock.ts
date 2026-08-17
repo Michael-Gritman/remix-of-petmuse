@@ -38,7 +38,6 @@ function lock() {
   body.style.left = "0";
   body.style.right = "0";
   body.style.width = "100%";
-  body.style.overflowY = "scroll"; // keep the scrollbar gutter present
   if (scrollbarWidth > 0) {
     body.style.paddingRight = `${scrollbarWidth}px`;
   }
