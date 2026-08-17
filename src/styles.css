@@ -1,0 +1,339 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * PetMuse design system — warm, bright, photographic.
+ * All colors are oklch tokens; never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
+  --radius-4xl: calc(var(--radius) + 28px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-clay: var(--clay);
+  --color-moss: var(--moss);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-settle: cubic-bezier(0.16, 0.84, 0.24, 1);
+  --ease-soft: cubic-bezier(0.32, 0.72, 0.24, 1);
+
+  --animate-rise: rise 780ms var(--ease-settle) both;
+  --animate-stagger: stagger 520ms var(--ease-settle) both;
+  --animate-modal-in: modal-in 470ms var(--ease-settle) both;
+  --animate-modal-out: modal-out 320ms var(--ease-soft) both;
+  --animate-overlay-in: overlay-in 320ms var(--ease-soft) both;
+  --animate-tile-in: tile-in 380ms var(--ease-settle) both;
+  --animate-heart: heart-pop 420ms var(--ease-settle);
+  --animate-sparkle: sparkle 4.5s ease-in-out infinite;
+}
+
+:root {
+  --radius: 1rem;
+
+  --background: oklch(0.988 0.006 90);
+  --foreground: oklch(0.26 0.014 60);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.26 0.014 60);
+  --popover: oklch(0.995 0.004 90);
+  --popover-foreground: oklch(0.26 0.014 60);
+
+  --primary: oklch(0.53 0.062 152);
+  --primary-foreground: oklch(0.985 0.006 100);
+
+  --secondary: oklch(0.955 0.014 82);
+  --secondary-foreground: oklch(0.3 0.016 60);
+
+  --muted: oklch(0.962 0.008 85);
+  --muted-foreground: oklch(0.53 0.014 65);
+
+  --accent: oklch(0.79 0.086 62);
+  --accent-foreground: oklch(0.28 0.03 55);
+
+  --destructive: oklch(0.6 0.15 25);
+  --destructive-foreground: oklch(0.985 0.006 100);
+
+  --border: oklch(0.916 0.01 85);
+  --input: oklch(0.916 0.01 85);
+  --ring: oklch(0.63 0.05 152);
+
+  --cream: oklch(0.976 0.012 88);
+  --sand: oklch(0.945 0.018 80);
+  --clay: oklch(0.74 0.078 48);
+  --moss: oklch(0.66 0.06 150);
+
+  --shadow-soft: 0 1px 2px oklch(0.4 0.03 70 / 0.04), 0 8px 24px oklch(0.4 0.03 70 / 0.05);
+  --shadow-lift: 0 2px 6px oklch(0.4 0.03 70 / 0.06), 0 18px 44px oklch(0.4 0.03 70 / 0.09);
+  --shadow-island: 0 4px 12px oklch(0.35 0.03 70 / 0.06), 0 30px 80px oklch(0.35 0.03 70 / 0.12);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+@utility shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+@utility shadow-island {
+  box-shadow: var(--shadow-island);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 104px, 0) scale(0.978);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes stagger {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.96);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.18);
+  }
+  70% {
+    transform: scale(0.985);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  82%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  88% {
+    transform: rotate(-9deg) scale(1.12);
+  }
+  94% {
+    transform: rotate(6deg) scale(1.04);
+  }
+}
+
+/* Hero background columns drift — very slow, seamless loop */
+@keyframes drift-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes drift-down {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.drift-column {
+  will-change: transform;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.drift-up {
+  animation-name: drift-up;
+}
+.drift-down {
+  animation-name: drift-down;
+}
+
+.fade-swap-out {
+  animation: fade-swap-out 180ms var(--ease-soft) both;
+}
+.fade-swap-in {
+  animation: fade-swap-in 320ms var(--ease-settle) both;
+}
+
+@keyframes fade-swap-out {
+  to {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+}
+@keyframes fade-swap-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .drift-column {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 200ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 160ms !important;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: none;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes stagger {
+    from {
+      opacity: 0;
+      transform: none;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: none;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes tile-in {
+    from {
+      opacity: 0;
+      transform: none;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
