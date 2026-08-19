@@ -12,6 +12,7 @@ import shihTzuImg from "@/assets/pets/shih-tzu.jpg";
 import abyssinianImg from "@/assets/pets/abyssinian.jpg";
 import devonRexImg from "@/assets/pets/devon-rex.jpg";
 import sphynxImg from "@/assets/pets/sphynx.jpg";
+import ragdollImg from "@/assets/pets/ragdoll.jpg";
 
 /**
  * Image layer — kept separate from UI so photography can be swapped for a
@@ -457,8 +458,8 @@ export const pets: Pet[] = [
     name: "Ragdoll",
     breed: "Ragdoll",
     category: "Cats",
-    image: photo("photo-1518288774672-b94e808873ff"),
-    ratio: 0.8,
+    image: ragdollImg,
+    ratio: 1.5,
     shortDescription:
       "Ragdolls follow you room to room and go soft when picked up — one of the most dog-like cats you can live with.",
     size: "Medium",

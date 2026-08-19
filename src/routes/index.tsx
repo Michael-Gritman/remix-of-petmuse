@@ -11,6 +11,7 @@ import { PetDetailModal } from "@/components/pet/PetDetailModal";
 import { CompareModal } from "@/components/pet/CompareModal";
 import { QuizButton } from "@/components/pet/QuizButton";
 import { QuizModal } from "@/components/pet/QuizModal";
+import { SiteFooter } from "@/components/pet/SiteFooter";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -139,9 +140,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t border-border px-4 py-10 text-center text-[13px] text-muted-foreground sm:px-8">
-        PetMuse — a space to discover, understand and compare future companions.
-      </footer>
+      <SiteFooter />
 
       <QuizButton visible={showQuizButton && !detailOpen} onClick={() => setQuizOpen(true)} />
 
