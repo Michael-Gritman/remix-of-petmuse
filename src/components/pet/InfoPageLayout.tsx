@@ -4,10 +4,15 @@ import { SiteFooter } from "./SiteFooter";
 
 interface InfoPageLayoutProps {
   title: string;
+  lastUpdated?: string;
   children: ReactNode;
 }
 
-export function InfoPageLayout({ title, children }: InfoPageLayoutProps) {
+export function InfoPageLayout({
+  title,
+  lastUpdated = "August 19, 2026",
+  children,
+}: InfoPageLayoutProps) {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <header className="fixed inset-x-0 top-0 z-40 bg-background/78 shadow-soft backdrop-blur-xl">
@@ -31,7 +36,7 @@ export function InfoPageLayout({ title, children }: InfoPageLayoutProps) {
         <h1 className="font-display text-[2rem] leading-tight font-medium tracking-[-0.02em] text-foreground sm:text-[2.5rem]">
           {title}
         </h1>
-        <p className="mt-3 text-[13px] text-muted-foreground">Last updated: August 19, 2026</p>
+        <p className="mt-3 text-[13px] text-muted-foreground">Last updated: {lastUpdated}</p>
         <div className="mt-10 space-y-8 text-[15px] leading-relaxed break-words text-muted-foreground">
           {children}
         </div>
