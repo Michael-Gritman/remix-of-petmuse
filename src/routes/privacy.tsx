@@ -59,17 +59,17 @@ function PrivacyPage() {
         <p>
           PetMuse does not provide user accounts, does not keep a user database of quiz answers or
           saved lists on our servers, does not take payments, and does not collect your location
-          through the site. Adoption and other external tools may ask for a location after you
-          leave PetMuse; that is governed by those sites, not by this policy.
+          through the site. Adoption and other external tools may ask for a location after you leave
+          PetMuse; that is governed by those sites, not by this policy.
         </p>
       </InfoSection>
 
       <InfoSection title="Hosting and technical request data">
         <p>
           The site is hosted on Cloudflare. When you load PetMuse, Cloudflare may process technical
-          data that comes with the request — such as IP address, timestamps, and browser
-          information — in order to operate the site, keep it secure, and diagnose problems. That
-          processing is part of hosting, not a PetMuse user profile.
+          data that comes with the request — such as IP address, timestamps, and browser information
+          — in order to operate the site, keep it secure, and diagnose problems. That processing is
+          part of hosting, not a PetMuse user profile.
         </p>
       </InfoSection>
 
@@ -121,9 +121,9 @@ function PrivacyPage() {
 
       <InfoSection title="Reaching us">
         <p>
-          PetMuse does not currently publish an email address, contact form or other contact
-          channel on this website. This policy does not offer a way to send us a message. If that
-          changes, we will say so here.
+          PetMuse does not currently publish an email address, contact form or other contact channel
+          on this website. This policy does not offer a way to send us a message. If that changes,
+          we will say so here.
         </p>
       </InfoSection>
 
