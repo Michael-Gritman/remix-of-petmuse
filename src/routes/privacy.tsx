@@ -2,9 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { InfoPageLayout, InfoSection } from "@/components/pet/InfoPageLayout";
 
 /**
- * TODO before enabling ads: add a real, monitored contact channel and update
- * this policy so users can reach us. Do not invent an email, form, or phone
- * number until one exists.
+ * TODO: add a real, monitored contact channel and update this policy so users
+ * can reach us. Do not invent an email, form, or phone number until one exists.
  */
 
 export const Route = createFileRoute("/privacy")({
@@ -14,7 +13,7 @@ export const Route = createFileRoute("/privacy")({
       {
         name: "description",
         content:
-          "How PetMuse handles quiz answers, saved profiles, hosting, and third-party content. Last updated August 19, 2026.",
+          "How PetMuse handles quiz answers, saved profiles, hosting, advertising, and third-party content. Last updated August 22, 2026.",
       },
     ],
   }),
@@ -23,13 +22,13 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   return (
-    <InfoPageLayout title="Privacy Policy">
+    <InfoPageLayout title="Privacy Policy" lastUpdated="August 22, 2026">
       <InfoSection title="What this policy covers">
         <p>
           This page describes how PetMuse works today. It is written to match the site’s actual
           behaviour, not a generic template. PetMuse does process some technical and on-device
-          information in order to load pages and remember choices you make in the browser. It does
-          not currently run Google AdSense, other third-party advertising, or advertising cookies.
+          information in order to load pages and remember choices you make in the browser. It also
+          uses Google AdSense, which may set cookies and collect technical data as described below.
         </p>
       </InfoSection>
 
@@ -89,10 +88,34 @@ function PrivacyPage() {
 
       <InfoSection title="Advertising and analytics">
         <p>
-          PetMuse does not currently use Google AdSense, other third-party ads, advertising
-          cookies, or a third-party analytics product on this site. If we enable advertising or
-          analytics in the future, we will update this Privacy Policy first and provide any
-          privacy choices that apply to those services.
+          PetMuse uses Google AdSense to show ads. Google’s AdSense script is included between the
+          head tags on every page so ads can be verified, measured and displayed.
+        </p>
+        <p>
+          Google and its partners may use cookies and similar technologies to serve ads based on
+          your visits to this site and other sites. You can opt out of personalised advertising in{" "}
+          <a
+            href="https://www.google.com/settings/ads"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground underline underline-offset-4"
+          >
+            Google Ads Settings
+          </a>
+          . Google also explains how it uses information from sites that use its services at{" "}
+          <a
+            href="https://policies.google.com/technologies/partner-sites"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground underline underline-offset-4"
+          >
+            How Google uses information from sites or apps that use our services
+          </a>
+          .
+        </p>
+        <p>
+          PetMuse does not currently use a separate third-party analytics product. If that changes,
+          we will update this policy first.
         </p>
       </InfoSection>
 
